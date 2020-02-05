@@ -16,18 +16,23 @@ import io.vertx.ext.web.handler.BodyHandler;
 public class ControllerProduto extends AbstractVerticle {
 	
 	ServiceProduto service = new ServiceProduto();
+	private static final String API_SAVE = "api/produto";
+	private static final String API_GET_ONE = "/api/produto/:id";
+	private static final String API_DELETE_ONE = "/api/produto/:id";
 	
     @Override
     public void start(Promise<Void> startPromise) {
 
         Router router = Router.router(vertx);
-        router.route("/api/produto").handler(BodyHandler.create());
+        router.route(API_SAVE).handler(BodyHandler.create());
 
         
-        router.get("/api/produto/:id")
+        router.get(API_GET_ONE)
                 .handler(this::getProdutos);
-        router.post("/api/produto")
+        router.post(API_SAVE)
         		.handler(this::setProdutos);
+        router.delete(API_DELETE_ONE)
+		.handler(this::setProdutos);
 
         vertx.createHttpServer()
                 .requestHandler(router)
