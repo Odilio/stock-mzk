@@ -1,8 +1,6 @@
 package com.mzk.controller;
 
 
-import java.util.ArrayList;
-
 import com.mzk.model.Produto;
 import com.mzk.service.ServiceProduto;
 import com.mzk.util.Constants;
@@ -10,7 +8,6 @@ import com.mzk.util.Constants;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
