@@ -1,6 +1,9 @@
 package com.mzk.model;
 
+import javax.validation.constraints.NotNull;
+
 public class Produto {
+	
     private String nome;
     private String codigoBarras;
     private String numeroSerie;

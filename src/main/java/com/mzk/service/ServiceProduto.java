@@ -1,23 +1,51 @@
 package com.mzk.service;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 
 import com.mzk.model.Produto;
 
-public class ServiceProduto {
-	ArrayList<Produto> produtos = new ArrayList<Produto>();
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 
-	 public Produto getProduto(String id) {
-	        Produto produto = new Produto();
+public class ServiceProduto {
+	 JsonArray produtos = new JsonArray();
+	 
+	 public JsonObject getProduto(String id) {
+		 JsonObject produto = new JsonObject();
 			return produto;
 	    }
 	 
-	 public ArrayList<Produto> setProduto(Produto pro) {
-	        produtos.add(pro);
-			return produtos;
+	 public JsonObject setProduto( Produto pro) {
+		 JsonObject produto = new JsonObject();
+		 if (pro.getNome() == null || pro.getCodigoBarras() == null || pro.getNumeroSerie() == null)
+		 {
+			 
+			 produto.put("error" , "Possui elementos vazios no body ");
+			 return produto;
+		 }
+		 for(int i = 0; i < produtos.size(); i++){
+			 Produto p = produtos.getJsonObject(i).mapTo(Produto.class);
+			 if (p.getCodigoBarras().equalsIgnoreCase(pro.getCodigoBarras()) 
+					 && p.getNumeroSerie().equalsIgnoreCase(pro.getNumeroSerie()))
+			 {
+				 System.out.println("fudeu " + produtos.getValue(i));
+				 produto.put("error" , "Codigo de barras já adicionado a este numero de série");
+			 	 return produto;
+			 }
+			 else
+				 System.out.println("não fudeu " + p.getCodigoBarras() + " oto " + pro.getCodigoBarras());
+		 }
+		  produto = JsonObject.mapFrom(pro);
+		 produtos.add(produto);
+		 return produto;
 	    }
 	 
-	 public ArrayList<Produto> getProdutos() {
+	 public JsonArray getProdutos() {
 	       return produtos;
+	    }
+	 
+	 public JsonObject deleteProduto(String id) {
+		 JsonObject produto = new JsonObject();
+	       return produto;
 	    }
 }
