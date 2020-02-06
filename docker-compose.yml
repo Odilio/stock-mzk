@@ -1,0 +1,7 @@
+version: "2"
+services:
+  mzk:
+    container_name: mzk
+    build: .
+    ports:
+      - "8080:8080"
